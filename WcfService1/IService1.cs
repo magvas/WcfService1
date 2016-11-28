@@ -14,7 +14,7 @@ namespace WcfService1
     {
 
         [OperationContract]
-        string GetData(int value);
+        string GetData(Credentials value);
 
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
@@ -29,7 +29,7 @@ namespace WcfService1
     {
         bool boolValue = true;
         string stringValue = "Hello ";
-
+        
         [DataMember]
         public bool BoolValue
         {
@@ -42,6 +42,32 @@ namespace WcfService1
         {
             get { return stringValue; }
             set { stringValue = value; }
+        }
+    }
+
+    [DataContract]
+    public class Credentials
+    {
+        [DataMember(IsRequired = false, Name = "UserName")]
+        public string UserName { get; set; }
+
+        [DataMember(IsRequired = false, Name = "Password")]
+        public string Password { get; set; }
+
+        [DataMember(IsRequired = false, Name = "SessionId")]
+        public string SessionId { get; set; }
+
+        public override string ToString()
+        {
+            StringBuilder response = new StringBuilder();
+
+            response.Append(UserName);
+            response.Append(" - ");
+            response.Append(Password);
+            response.Append(" - ");
+            response.Append(SessionId);
+
+            return response.ToString();
         }
     }
 }
